@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"> -->
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 	
+		<meta name="viewport" id="vp" content="user-scalable=no, width=420, initial-scale=0.7, maximum-scale=0.7"> 
+		<script>
+			window.onload = function() {
+				if (screen.width > 420) {
+					var mvp = document.getElementById('vp');
+					// mvp.setAttribute('content','');
+					mvp.setAttribute('content','width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0');
+				}
+			}
+			var timer;
+			var hamburger = false;
+		</script>
+		<link rel="shortcut icon" href="files/icon.png" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="keywords" content="stunkit, home page, electronic, ukraine, love usa, official">
+        <meta name="description" content="Hello there, this is my official homepage. I am STUNKIT, electronic music producer from Western Europe">
+		<meta property="og:image" content="files/202102-arrival/bg.jpg" />
+        <title>ARRIVAL is out now! :: STUNKIT</title>
+		<script>
+			function validateMyForm(id) {
+				//alert();
+				form = document.getElementById(id);
+				form.getElementsByTagName('button')[0].setAttribute('disabled', true);
+				form.getElementsByTagName('button')[0].innerHTML = 'Loading';
+				//console.log(form.getElementsByTagName('button')[0]);
+				//form.getElementsByTagName('textarea')[0].setAttribute('disabled', true);
+				for (el of form.getElementsByTagName('input')) {
+					el.setAttribute('disabled', true);
+					
+				}
+				//console.log(form);
+				elem = form.querySelectorAll("input, textarea");
+				
+				const params = {};
+				params['email'] = form.elements['email'].value;		
+					
+				//console.log();
+				postAjax('https://soundpeaks.net/umail.php', params, function(data){ 
+					data = JSON.parse(data);
+					
+					if (data['status'] === 'ok') {
+						form.getElementsByTagName('button')[0].innerHTML = 'Thank you!';
+						form.getElementsByTagName('button')[0].disabled = false;
+						form.getElementsByTagName('button')[0].style.backgroundColor = "#0EB50E";
+						form.getElementsByTagName('button')[0].style.color = "#ffffff";
+						for (el of form.getElementsByTagName('input')) {
+							el.disabled = false;
+							el.checked = false;
+							el.value = '';
+						}
+						
+						setTimeout(function() {elem = document.getElementById(id).getElementsByTagName('button')[0]; elem.innerHTML = 'Subscribe'; elem.style.backgroundColor = '';  elem.style.color = '';}, 3000);
+					} else {
+						form.getElementsByTagName('button')[0].innerHTML = 'Error';
+						form.getElementsByTagName('button')[0].style.backgroundColor = "#FF6633";
+						form.getElementsByTagName('button')[0].style.color = "#ffffff";
+						
+					}
+				});
+				
+			}
+			
+			function postAjax(url, data, success) {
+				var params = typeof data == 'string' ? data : Object.keys(data).map(
+						function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+					).join('&');
+			
+				var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+				xhr.open('POST', url);
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState>3 && xhr.status==200) { success(xhr.responseText); }
+				};
+				xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				xhr.send(params);
+				return xhr;
+			}
+		</script>
+        <style>
+			body {
+				padding: 0;
+				margin: 0;
+				height: 100%;
+				background: #000;
+				color: #fff;
+				font-family: 'Montserrat', sans-serif;
+			}
+			a {
+				text-decoration: none;
+			}
+			a:visited {
+				color: grey; 
+			}
+			#socials a {
+				font-size: 55px;
+				width: 50px;
+				display: inline-block;
+				text-align: center;
+				color: white !important;
+			}
+			#socials a:hover {
+				color: white !important;
+			}
+			#socials div {
+				display:inline;
+				
+				font-family: monospace;
+			}
+			.frame {
+				width: 100%;
+				height: auto;
+				min-height: 560px;
+				display: flex; 
+				justify-content: center;
+				align-items: center;
+				margin-bottom: 2vw;
+			}
+			.box {
+				max-width: 640px;
+				min-height: 480px;
+				background: rgba(0,0,0,.5);
+				padding: 2vw;
+				border: 5px solid #000;
+				box-shadow: 0 0 15px #000;
+			}
+			iframe {
+				/* min-width: 640px; */
+				width: 100%;
+				overflow: hidden;
+			}
+			#s2 {
+				background: url("files/202102-arrival/bg.jpg") no-repeat center center / cover;
+			}
+			
+			#s1 {
+				background: url("files/bg.jpg") no-repeat center center / cover;
+			}
+			.w {
+				float: left;
+			}
+			.s50 {
+				float: left;
+				width: 49.5%;
+				text-align: center;
+			}
+			.s50 a {
+				display: block;
+				line-height: 50px;
+			}
+			.s50 a img {
+				vertical-align: middle;
+			}
+			.s50 a:hover, .action:hover {
+				background: rgba(255,255,255,.1);
+			}
+			.s1 {
+				width: 64px;
+				height: var(--hg);
+			}
+			.s2 {
+				width: calc(100% - (90px + 65px));
+				display: flex;
+				align-items: center;
+			}
+			.s3 {
+				width: 90px;
+				height: var(--hg);
+				display: flex;
+				align-items: center;
+			}
+			.action {
+				width: 100%;
+				line-height: var(--hg);
+				display: block;
+				float: left;
+				margin-bottom: 10px;
+				padding: 0 7px;
+				outline:none;
+			}
+			.action:active {
+				outline: none;
+			}
+			.action span {
+				display: inline-block;
+			}
+			.action img {
+				vertical-align: middle;
+				padding-right: 25px;
+			}
+			.action .name {
+				color: #fff;
+				height: var(--hg);
+			}
+			.play {
+				width: 80px;
+				height: 36px;
+				line-height: 36px;
+				border-radius: 4px;
+				background: #bd2728;
+				text-align: center;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				color:#fff;
+			}
+			span.i {
+				display: inline-block;
+				background-image: url(files/iconsw.png);
+				background-size: 1191px 1137px;
+				background-repeat: no-repeat;
+				transform: scale(0.75);
+			}
+			span.yt {
+				width: 50px;
+				height: 57px;
+				background-position: -949px -754px;
+			}
+			span.in {
+				width: 50px;
+				height: 57px;
+				background-position: -847px 0px;
+			}
+			span.tw {
+				width: 50px;
+				height: 57px;
+				background-position: -795px -174px;
+			}
+			span.tg {
+				width: 55px;
+				height: 57px;
+				background-position: -462px -232px;
+			}
+			span.sc {
+				width: 57px;
+				height: 46px;
+				background-position: -812px -1033px;
+			}
+			span.sp {
+				width: 55px;
+				height: 57px;
+				background-position: -518px 0px;
+			}
+			span.fb {
+				width: 50px;
+				height: 57px;
+				background-position: -795px -406px;
+			}
+			span.ap {
+				width: 42px;
+				height: 57px;
+				background-position: -526px -1080px;
+			}
+			/* https://fortawesome.com/sets/font-awesome-5-brands */
+			.s1 .i {
+				margin-top: 3px;
+			}
+		</style>
+    </head>
+	<body>
+	<div id="dbg" style="position: fixed; top:0;background:#fff;color:red; padding: 30px; display:none;"></div>
+		
+		<div class="frame" id="s2">
+			<div class="box">
+				<iframe class="sc" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/989921437&color=%23d1d1d1&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+				<br>
+				<br>
+				<div>
+					<div class="w s50">
+						<a style="color: #fff;" href="files/202102-arrival/Stunkit%20-%20Arrival.mp3" download><img src="files/dl.png" alt=""> Download mp3</a>
+					</div>
+					<div class="w s50">
+						<a style="color: #fff;" href="http://soundpeaks.net/data/files/downloads/Stunkit%20-%20Arrival.flac" download><img src="files/dl.png" alt=""> Download flac</a>
+					</div>
+					
+					<div style="clear:both;"><br></div>
+					
+					<a class="action" target="_blank" href="https://open.spotify.com/album/5uKYOTYEWRZIILNyuzJg7Z">
+						<div class="w s1"><span class="i sp"></span></div>
+						<div class="w s2"><span class="name">Spotify</span></div>
+						<div class="w s3"><span class="play">Play</span></div>
+					</a>
+					
+					<a class="action" target="_blank" href="https://music.apple.com/us/album/arrival-single/1554466746?uo=4">
+						<div class="w s1"><span class="i ap"></span></div>
+						<div class="w s2"><span class="name">Apple Music</span></div>
+						<div class="w s3"><span class="play">Play</span></div>
+					</a>
+					
+					<a class="action" target="_blank" href="https://www.youtube.com/watch?v=XGoTmvmku8I">
+						<div class="w s1"><span class="i yt"></span></div>
+						<div class="w s2"><span class="name">YouTube</span></div>
+						<div class="w s3"><span class="play">Play</span></div>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="frame" id="s1">
+			<div class="box">
+				<p>
+					Hi, my name is Ollie. I like to read and watch science fiction, learn about Universe and discover futuristic visual art on the internet. In my music I try to push the limits of the electronic sound and prefer heavy genres. 
+					<br>
+					<br>
+					Skrillex, Noisia and rise of electronic music in 2010th were my biggest inspiration and motive to learn how to make electronic music. Check my <a target="_blank" style="color: #ba0000;" href="https://www.last.fm/user/olb_fm">last.fm</a> for the listening statistics, I still scrobble most of music I listen to.
+					<br>
+					<br>
+					I use Cubase and Yamaha HS loudspeakers. Steinberg is my favourite company. My custom built PC has Windows 10, AMD Ryzen CPU, GeForce 2060 GPU and 32GB RAM.
+					<br>
+					<br>
+					Hit me with a message on the social networks, I like to meet new people.
+					<br>
+					<br>
+					<div id="socials">
+						<div><a target="_blank" style="color: #ca377c" href="https://instagram.com/stunkit" title="instagram"><span class="i in"></span></a></div>
+						&nbsp;
+						&nbsp;
+						<div><a target="_blank" style="color: #55acee" href="https://twitter.com/stunkit" title="twitter"><span class="i tw"></span></a></div>
+						&nbsp;
+						&nbsp;
+						<div><a target="_blank" style="color: #3b5998" href="https://facebook.com/stunkit" title="facebook"><span class="i fb"></span></a></div>			
+						&nbsp;
+						&nbsp;
+						<div><a target="_blank" style="color: #37aee2" href="https://t.me/stunkit" title="telegram"><span class="i tg"></span></a></div>
+					</div>
+					<br>
+					<br>
+					<div style="">Get my new releases as an e-mail digest: <br> <br>
+						<form style="display:inline;" id="sbs" onsubmit="event.preventDefault(); validateMyForm('sbs');" method="post" autocomplete="off">
+							<input type="email" placeholder="email" name="email" style="outline: none; border: 1px solid lightgray; padding-left: 5px; width: 200px; height: 30px; font-size: 110%; box-sizing: border-box;" /> 
+							<button type="submit" value="" class="button-default" style="height: 28px; font-size: 110%; box-sizing: content-box; border: none;">Subscribe</button>
+						</form>
+					</div>
+				</p>
+			</div>
+		</div>
+		
+		
+		
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-39717575-6"></script>
+		<script>
+			function throttle (callback, limit) {
+				var waiting = false;                      // Initially, we're not waiting
+				return function () {                      // We return a throttled function
+					if (!waiting) {                       // If we're not waiting
+						callback.apply(this, arguments);  // Execute users function
+						waiting = true;                   // Prevent future invocations
+						setTimeout(function () {          // After a period of time
+							waiting = false;              // And allow future invocations
+						}, limit);
+					}
+				}
+			}
+			
+			function resizeBody () {
+				wh = window.innerHeight;
+				document.getElementById('dbg').innerHTML = window.innerWidth;
+				if (window.innerWidth <= 400) return false;
+				cls = document.querySelectorAll('.frame');
+				cls.forEach(function(e, i) {
+		            e.style.height = wh + 'px';
+		        });
+			}
+			
+			
+		
+			/* frame height */
+			var wh = window.innerHeight;
+			var cls = document.querySelectorAll('.frame');
+			cls.forEach(function(e, i) {
+				e.style.height = wh + 'px';
+			});
+			window.addEventListener('resize', throttle(resizeBody, 100));
+
+
+			/* first box margin */
+			//var box1 = document.querySelector('.box');
+			//box1.style.marginTop = '60px';
+
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-39717575-6');
+		</script>
+
+	</body>
+</html>
